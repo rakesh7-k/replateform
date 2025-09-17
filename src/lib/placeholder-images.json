@@ -1,3 +1,52 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "A vibrant community sharing food at a long table outdoors.",
+      "imageUrl": "https://picsum.photos/seed/1/1800/1200",
+      "imageHint": "food sharing community"
+    },
+    {
+      "id": "donation-sandwich",
+      "description": "A platter of freshly made sandwiches.",
+      "imageUrl": "https://picsum.photos/seed/101/400/300",
+      "imageHint": "sandwiches platter"
+    },
+    {
+      "id": "donation-bread",
+      "description": "A collection of assorted bread loaves.",
+      "imageUrl": "https://picsum.photos/seed/102/400/300",
+      "imageHint": "artisan bread"
+    },
+    {
+      "id": "donation-produce",
+      "description": "A box of fresh fruits and vegetables.",
+      "imageUrl": "https://picsum.photos/seed/103/400/300",
+      "imageHint": "fresh produce"
+    },
+    {
+      "id": "donation-pastries",
+      "description": "A variety of pastries on a tray.",
+      "imageUrl": "https://picsum.photos/seed/104/400/300",
+      "imageHint": "assorted pastries"
+    },
+    {
+      "id": "donation-canned",
+      "description": "A collection of canned goods.",
+      "imageUrl": "https://picsum.photos/seed/105/400/300",
+      "imageHint": "canned goods"
+    },
+    {
+      "id": "donation-meals",
+      "description": "Prepared meals in containers.",
+      "imageUrl": "https://picsum.photos/seed/106/400/300",
+      "imageHint": "prepared meals"
+    },
+    {
+      "id": "dashboard-map",
+      "description": "A stylized map for the dashboard.",
+      "imageUrl": "https://picsum.photos/seed/201/800/600",
+      "imageHint": "city map"
+    }
+  ]
 }
