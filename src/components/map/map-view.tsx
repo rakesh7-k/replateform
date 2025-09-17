@@ -1,3 +1,4 @@
+
 'use client';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
@@ -6,7 +7,6 @@ import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import 'leaflet-defaulticon-compatibility';
 
 import { mockDonations } from '@/lib/data';
-import type { Donation } from '@/lib/types';
 import { Button } from '../ui/button';
 import { formatDistanceToNow } from 'date-fns';
 
@@ -14,7 +14,12 @@ export default function MapView() {
   const position: [number, number] = [34.0522, -118.2437];
 
   return (
-    <MapContainer center={position} zoom={11} scrollWheelZoom={false} className="w-full h-full">
+    <MapContainer
+      center={position}
+      zoom={11}
+      scrollWheelZoom={false}
+      className="w-full h-full"
+    >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
