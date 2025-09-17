@@ -1,18 +1,20 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
+import MapView from '@/components/map/map-view';
 
 const DynamicMap = () => {
-  const Map = useMemo(
-    () =>
-      dynamic(() => import('@/components/map/map-view'), {
-        loading: () => <p>A map is loading</p>,
-        ssr: false,
-      }),
-    []
-  );
-  return <Map />;
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return <p>A map is loading</p>;
+  }
+
+  return <MapView />;
 };
 
 export default DynamicMap;
