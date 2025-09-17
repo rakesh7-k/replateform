@@ -11,11 +11,13 @@ import { useEffect, useState } from 'react';
 
 export default function DonationCard({ donation, onAccept }: DonationCardProps) {
   const [timeLeft, setTimeLeft] = useState('');
+  const [pickupTime, setPickupTime] = useState('');
   const [isAccepting, setIsAccepting] = useState(false);
 
   useEffect(() => {
+    const pickupDate = new Date(donation.pickupTime);
+
     const calculateTimeLeft = () => {
-      const pickupDate = new Date(donation.pickupTime);
       const now = new Date();
       if (pickupDate < now) {
         return 'Expired';
@@ -24,6 +26,8 @@ export default function DonationCard({ donation, onAccept }: DonationCardProps) 
     };
 
     setTimeLeft(calculateTimeLeft());
+    setPickupTime(pickupDate.toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
+
     const interval = setInterval(() => setTimeLeft(calculateTimeLeft()), 60000); // Update every minute
 
     return () => clearInterval(interval);
@@ -67,7 +71,7 @@ export default function DonationCard({ donation, onAccept }: DonationCardProps) 
           </div>
           <div className="flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />
-            <span>Pickup: {new Date(donation.pickupTime).toLocaleString([], { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
+            <span>Pickup: {pickupTime || 'Loading...'}</span>
           </div>
         </div>
       </CardContent>
