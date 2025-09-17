@@ -1,10 +1,23 @@
 'use client';
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { ChartTooltipContent } from '@/components/ui/chart';
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart';
 import { mockChartData } from '@/lib/data';
 import { format } from 'date-fns';
+
+
+const chartConfig = {
+  donations: {
+    label: 'Donations',
+    color: 'hsl(var(--primary))',
+  },
+} satisfies ChartConfig;
 
 export default function DonationsOverTimeChart() {
   const data = mockChartData.map(d => ({...d, date: new Date(d.date)}));
@@ -16,8 +29,8 @@ export default function DonationsOverTimeChart() {
         <CardDescription>A look at the number of donations made each day.</CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={350}>
-          <BarChart data={data}>
+         <ChartContainer config={chartConfig} className="h-[350px] w-full">
+          <BarChart accessibilityLayer data={data}>
             <XAxis
               dataKey="date"
               stroke="hsl(var(--muted-foreground))"
@@ -33,13 +46,13 @@ export default function DonationsOverTimeChart() {
               axisLine={false}
               tickFormatter={(value) => `${value}`}
             />
-             <Tooltip 
+            <ChartTooltip 
               cursor={{ fill: 'hsl(var(--muted))' }}
               content={<ChartTooltipContent />}
             />
-            <Bar dataKey="donations" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="donations" fill="var(--color-donations)" radius={[4, 4, 0, 0]} />
           </BarChart>
-        </ResponsiveContainer>
+        </ChartContainer>
       </CardContent>
     </Card>
   );
