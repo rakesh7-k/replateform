@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A vibrant community sharing food at a long table outdoors.",
-      "imageUrl": "https://picsum.photos/seed/1/1800/1200",
-      "imageHint": "food sharing community"
+      "description": "A digital globe with food items orbiting it, representing a global food network.",
+      "imageUrl": "https://picsum.photos/seed/food-globe/1800/1200",
+      "imageHint": "global food network"
     },
     {
       "id": "donation-sandwich",
