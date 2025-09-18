@@ -23,12 +23,11 @@ export default function Home() {
               priority
             />
           )}
-          <div className="absolute inset-0 bg-black/60" />
-          <div className="relative z-10 text-center text-white px-4 flex flex-col items-center">
+          <div className="relative z-10 text-center text-foreground px-4 flex flex-col items-center">
             <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight font-headline">
               NO PLATE LEFT BEHIND
             </h1>
-            <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-neutral-200">
+            <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-foreground/80">
               Join our global network of food heroes and help us create a world with zero hunger and zero food waste.
             </p>
             <div className="mt-8 flex justify-center gap-4">
