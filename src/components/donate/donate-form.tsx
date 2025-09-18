@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -46,6 +47,7 @@ import {
 
 const formSchema = z.object({
   foodType: z.string().min(1, 'Please select a food type.'),
+  mealName: z.string().optional(),
   quantity: z.string().min(1, 'Please enter a quantity.'),
   pickupTime: z.string().min(1, 'Please select a pickup time.'),
   location: z.string().min(1, 'Please provide a location.'),
@@ -69,12 +71,16 @@ export default function DonateForm() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       foodType: '',
+      mealName: '',
       quantity: '',
       pickupTime: '',
       location: '',
       contact: '',
     },
   });
+
+  const foodType = form.watch('foodType');
+  const showMealName = foodType === 'Prepared Meals' || foodType === 'Sandwiches';
 
   const handleLocation = () => {
     setIsLocating(true);
@@ -205,6 +211,22 @@ export default function DonateForm() {
                   </FormItem>
                 )}
               />
+
+              {showMealName && (
+                <FormField
+                  control={form.control}
+                  name="mealName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Meal Details</FormLabel>
+                      <FormControl>
+                        <Input placeholder="e.g., Chicken Biryani, Veggie Sandwich" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
 
               <Button type="button" variant="outline" size="sm" onClick={handleSuggestion} disabled={isSuggesting}>
                 {isSuggesting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
