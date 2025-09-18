@@ -29,14 +29,14 @@ export default function Home() {
               NO PLATE LEFT BEHIND
             </h1>
             <p className="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-neutral-200">
-              Join a global network of food heros
+              Join our global network of food heroes and help us create a world with zero hunger and zero food waste.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-xl text-lg px-8 py-6 transform transition-transform duration-200 hover:-translate-y-1">
-                <Link href="/donate"><HandHeart className="mr-2"/>DONATE FOOD</Link>
+                <Link href="/donate"><HandHeart className="mr-2"/>Donate Food</Link>
               </Button>
               <Button asChild size="lg" variant="secondary" className="bg-blue-500 hover:bg-blue-600 text-white rounded-xl text-lg px-8 py-6 transform transition-transform duration-200 hover:-translate-y-1">
-                <Link href="/request"><Utensils className="mr-2"/>REQUEST FOOD</Link>
+                <Link href="/request"><Utensils className="mr-2"/>Request Food</Link>
               </Button>
             </div>
           </div>

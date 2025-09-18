@@ -1,10 +1,11 @@
+
 {
   "placeholderImages": [
     {
       "id": "hero-background",
-      "description": "A digital globe with food items orbiting it, representing a global food network.",
-      "imageUrl": "https://picsum.photos/seed/global-food-net/1800/1200",
-      "imageHint": "global food network"
+      "description": "A digital earth with network lines, symbolizing global connections for food sharing.",
+      "imageUrl": "https://picsum.photos/seed/digital-earth/1800/1200",
+      "imageHint": "digital earth network"
     },
     {
       "id": "donation-sandwich",
