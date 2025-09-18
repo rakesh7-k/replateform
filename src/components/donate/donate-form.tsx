@@ -33,7 +33,7 @@ import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { foodTypes as foodTypeOptions } from '@/lib/data';
 import { Loader2, MapPin, CheckCircle, RefreshCw } from 'lucide-react';
-import { generateQuote } from '@/ai/flows/generate-quote';
+import { generateDonationQuote } from '@/ai/flows/generate-donation-quote';
 
 
 const formSchema = z.object({
@@ -72,11 +72,11 @@ export default function DonateForm() {
   const fetchQuote = async () => {
     setIsGeneratingQuote(true);
     try {
-      const newQuote = await generateQuote({ topic: 'food donation for bachelors' });
+      const newQuote = await generateDonationQuote({ topic: 'the spirit of giving' });
       setQuote(newQuote);
     } catch (error) {
       console.error('Quote generation error:', error);
-      setQuote({ text: 'Sharing a meal is sharing a moment of connection.', author: 'Community Proverb' });
+      setQuote({ text: 'The smallest act of kindness is worth more than the grandest intention.', author: 'Oscar Wilde' });
     } finally {
       setIsGeneratingQuote(false);
     }
@@ -169,7 +169,7 @@ export default function DonateForm() {
         <CardDescription>Fill out the form below to list your donation.</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="mb-6 p-4 bg-secondary/50 rounded-lg text-center">
+        <div className="mb-6 p-4 bg-secondary/50 rounded-lg text-center relative">
             <blockquote className="text-lg italic text-foreground/80">"{quote.text}"</blockquote>
             <p className="text-right text-sm font-semibold text-foreground/60 mt-2">- {quote.author}</p>
             <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={fetchQuote} disabled={isGeneratingQuote}>
@@ -292,5 +292,3 @@ export default function DonateForm() {
     </Card>
   );
 }
-
-    

@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import DonationCard from '@/components/request/donation-card';
 import Filters from '@/components/request/filters';
 import { mockDonations } from '@/lib/data';
 import type { Donation } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
+import { generateQuote } from '@/ai/flows/generate-quote';
+import { Button } from '@/components/ui/button';
+import { RefreshCw } from 'lucide-react';
 
 export default function RequestPage() {
   const [donations, setDonations] = useState<Donation[]>(mockDonations);
@@ -15,6 +18,25 @@ export default function RequestPage() {
     distance: 25,
   });
   const { toast } = useToast();
+  const [quote, setQuote] = useState({ text: 'Loading an inspiring quote...', author: '' });
+  const [isGeneratingQuote, setIsGeneratingQuote] = useState(true);
+
+  const fetchQuote = async () => {
+    setIsGeneratingQuote(true);
+    try {
+      const newQuote = await generateQuote({ topic: 'food donation for bachelors' });
+      setQuote(newQuote);
+    } catch (error) {
+      console.error('Quote generation error:', error);
+      setQuote({ text: 'Sharing a meal is sharing a moment of connection.', author: 'Community Proverb' });
+    } finally {
+      setIsGeneratingQuote(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuote();
+  }, []);
 
   const handleFilterChange = useCallback((newFilters: typeof filters) => {
     setFilters(newFilters);
@@ -50,7 +72,15 @@ export default function RequestPage() {
   return (
     <div className="container py-8">
       <h1 className="text-3xl font-bold tracking-tight mb-2 font-headline">Available Donations</h1>
-      <p className="text-muted-foreground mb-8">Browse and claim food donations near you.</p>
+      <p className="text-muted-foreground mb-4">Browse and claim food donations near you.</p>
+
+      <div className="mb-8 p-4 bg-secondary/50 rounded-lg text-center relative">
+          <blockquote className="text-lg italic text-foreground/80">"{quote.text}"</blockquote>
+          <p className="text-right text-sm font-semibold text-foreground/60 mt-2">- {quote.author}</p>
+          <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={fetchQuote} disabled={isGeneratingQuote}>
+              <RefreshCw className={`h-4 w-4 ${isGeneratingQuote ? 'animate-spin' : ''}`} />
+          </Button>
+      </div>
 
       <Filters onFilterChange={handleFilterChange} />
       
