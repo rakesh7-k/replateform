@@ -32,7 +32,8 @@ export default function RequestPage() {
     try {
       const newQuote = await generateQuote({ topic: 'food donation for bachelors' });
       setQuote(newQuote);
-    } catch (error)      console.error('Quote generation error:', error);
+    } catch (error) {
+      console.error('Quote generation error:', error);
       setQuote({ text: 'Sharing a meal is sharing a moment of connection.', author: 'Community Proverb' });
     } finally {
       setIsGeneratingQuote(false);
