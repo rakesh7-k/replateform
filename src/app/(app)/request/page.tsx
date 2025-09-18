@@ -1,17 +1,19 @@
+
 'use client';
 
 import { useState, useMemo, useCallback, useEffect } from 'react';
 import DonationCard from '@/components/request/donation-card';
 import Filters from '@/components/request/filters';
-import { mockDonations } from '@/lib/data';
 import type { Donation } from '@/lib/types';
 import { useToast } from '@/hooks/use-toast';
 import { generateQuote } from '@/ai/flows/generate-quote';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
+import { useDonations } from '@/context/DonationContext';
 
 export default function RequestPage() {
-  const [donations, setDonations] = useState<Donation[]>(mockDonations);
+  const { donations: allDonations } = useDonations();
+  const [donations, setDonations] = useState<Donation[]>(allDonations);
   const [filters, setFilters] = useState({
     search: '',
     type: 'all',
@@ -21,13 +23,16 @@ export default function RequestPage() {
   const [quote, setQuote] = useState({ text: 'Loading an inspiring quote...', author: '' });
   const [isGeneratingQuote, setIsGeneratingQuote] = useState(true);
 
+  useEffect(() => {
+    setDonations(allDonations);
+  }, [allDonations]);
+
   const fetchQuote = async () => {
     setIsGeneratingQuote(true);
     try {
       const newQuote = await generateQuote({ topic: 'food donation for bachelors' });
       setQuote(newQuote);
-    } catch (error) {
-      console.error('Quote generation error:', error);
+    } catch (error)      console.error('Quote generation error:', error);
       setQuote({ text: 'Sharing a meal is sharing a moment of connection.', author: 'Community Proverb' });
     } finally {
       setIsGeneratingQuote(false);

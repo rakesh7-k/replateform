@@ -34,7 +34,7 @@ import { useToast } from '@/hooks/use-toast';
 import { foodTypes as foodTypeOptions } from '@/lib/data';
 import { Loader2, MapPin, CheckCircle, RefreshCw } from 'lucide-react';
 import { generateDonationQuote } from '@/ai/flows/generate-donation-quote';
-
+import { useDonations } from '@/context/DonationContext';
 
 const formSchema = z.object({
   foodType: z.string().min(1, 'Please select a food type.'),
@@ -54,6 +54,7 @@ export default function DonateForm() {
   const [progress, setProgress] = useState(0);
   const [quote, setQuote] = useState({ text: 'Loading an inspiring quote...', author: '' });
   const [isGeneratingQuote, setIsGeneratingQuote] = useState(true);
+  const { addDonation } = useDonations();
 
   const { toast } = useToast();
 
@@ -122,6 +123,21 @@ export default function DonateForm() {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
     
+    let lat = 34.0522;
+    let lng = -118.2437;
+    const latLngMatch = values.location.match(/Lat: ([-.\d]+), Lng: ([-.\d]+)/);
+    if (latLngMatch) {
+      lat = parseFloat(latLngMatch[1]);
+      lng = parseFloat(latLngMatch[2]);
+    }
+
+    addDonation({
+      foodType: values.mealName ? `${values.foodType} (${values.mealName})` : values.foodType,
+      quantity: values.quantity,
+      pickupTime: new Date(values.pickupTime).toISOString(),
+      location: { lat, lng, label: values.location },
+    });
+
     clearInterval(progressInterval);
     setProgress(100);
 
