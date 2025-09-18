@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, aimport { useState, createContext, useContext } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import type { Donation } from '@/lib/types';
 import { mockDonations } from '@/lib/data';
 
