@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -32,17 +32,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { useToast } from '@/hooks/use-toast';
 import { foodTypes as foodTypeOptions } from '@/lib/data';
-import { Loader2, MapPin, Sparkles, CheckCircle, Lightbulb } from 'lucide-react';
-import { suggestFoodTypes } from '@/ai/flows/suggest-food-types';
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog';
+import { Loader2, MapPin, CheckCircle, RefreshCw } from 'lucide-react';
+import { generateQuote } from '@/ai/flows/generate-quote';
 
 
 const formSchema = z.object({
@@ -60,10 +51,9 @@ export default function DonateForm() {
   const [formStep, setFormStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
-  const [isSuggesting, setIsSuggesting] = useState(false);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [quote, setQuote] = useState({ text: 'Loading an inspiring quote...', author: '' });
+  const [isGeneratingQuote, setIsGeneratingQuote] = useState(true);
 
   const { toast } = useToast();
 
@@ -78,6 +68,23 @@ export default function DonateForm() {
       contact: '',
     },
   });
+
+  const fetchQuote = async () => {
+    setIsGeneratingQuote(true);
+    try {
+      const newQuote = await generateQuote({ topic: 'food donation for bachelors' });
+      setQuote(newQuote);
+    } catch (error) {
+      console.error('Quote generation error:', error);
+      setQuote({ text: 'Sharing a meal is sharing a moment of connection.', author: 'Community Proverb' });
+    } finally {
+      setIsGeneratingQuote(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuote();
+  }, []);
 
   const foodType = form.watch('foodType');
   const showMealName = foodType === 'Prepared Meals' || foodType === 'Sandwiches';
@@ -102,28 +109,6 @@ export default function DonateForm() {
         });
       }
     );
-  };
-
-  const handleSuggestion = async () => {
-    setIsSuggesting(true);
-    try {
-      const location = form.getValues('location') || "user's current location";
-      const result = await suggestFoodTypes({
-        location,
-        historicalData: 'donated bread and pastries last month',
-      });
-      setSuggestions(result.suggestions);
-      setShowSuggestions(true);
-    } catch (error) {
-      console.error('AI suggestion error:', error);
-      toast({
-        title: 'Could not get suggestions',
-        description: 'The AI assistant is unavailable right now. Please try again later.',
-        variant: 'destructive',
-      });
-    } finally {
-      setIsSuggesting(false);
-    }
   };
 
   const onSubmit = async (values: FormValues) => {
@@ -171,7 +156,7 @@ export default function DonateForm() {
         </CardHeader>
         <CardContent className="text-center">
             <p className="text-lg font-semibold">Reference ID: <span className="font-mono text-primary">DNT-{Date.now().toString().slice(-6)}</span></p>
-            <Button onClick={() => { setFormStep(0); form.reset(); setProgress(0); }} className="mt-6">Make Another Donation</Button>
+            <Button onClick={() => { setFormStep(0); form.reset(); setProgress(0); fetchQuote(); }} className="mt-6">Make Another Donation</Button>
         </CardContent>
       </Card>
     )
@@ -184,6 +169,14 @@ export default function DonateForm() {
         <CardDescription>Fill out the form below to list your donation.</CardDescription>
       </CardHeader>
       <CardContent>
+        <div className="mb-6 p-4 bg-secondary/50 rounded-lg text-center">
+            <blockquote className="text-lg italic text-foreground/80">"{quote.text}"</blockquote>
+            <p className="text-right text-sm font-semibold text-foreground/60 mt-2">- {quote.author}</p>
+            <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={fetchQuote} disabled={isGeneratingQuote}>
+                <RefreshCw className={`h-4 w-4 ${isGeneratingQuote ? 'animate-spin' : ''}`} />
+            </Button>
+        </div>
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
@@ -227,12 +220,6 @@ export default function DonateForm() {
                   )}
                 />
               )}
-
-              <Button type="button" variant="outline" size="sm" onClick={handleSuggestion} disabled={isSuggesting}>
-                {isSuggesting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
-                Get AI Suggestions
-              </Button>
-
 
               <FormField
                 control={form.control}
@@ -302,24 +289,8 @@ export default function DonateForm() {
           </form>
         </Form>
       </CardContent>
-
-      <AlertDialog open={showSuggestions} onOpenChange={setShowSuggestions}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="flex items-center gap-2"><Lightbulb className="text-accent" /> AI Suggestions</AlertDialogTitle>
-            <AlertDialogDescription>
-              Based on your location and recent trends, here are some needed items:
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-foreground">
-            {suggestions.map((s, i) => <li key={i}>{s}</li>)}
-          </ul>
-          <AlertDialogFooter>
-            <AlertDialogAction onClick={() => setShowSuggestions(false)}>Got it!</AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
     </Card>
   );
 }
+
+    
