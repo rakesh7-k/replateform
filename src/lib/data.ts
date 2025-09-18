@@ -6,8 +6,8 @@ const now = new Date();
 export const mockDonations: Donation[] = [
   {
     id: 'd_001',
-    imageUrl: 'https://picsum.photos/seed/sandwich/400/300',
-    imageHint: 'sandwiches platter',
+    imageUrl: 'https://picsum.photos/seed/club-sandwich/400/300',
+    imageHint: 'club sandwiches',
     foodType: 'Sandwiches',
     quantity: '20 meals',
     pickupTime: addHours(now, 2).toISOString(),
@@ -17,8 +17,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_002',
-    imageUrl: 'https://picsum.photos/seed/bread/400/300',
-    imageHint: 'artisan bread',
+    imageUrl: 'https://picsum.photos/seed/sourdough-bread/400/300',
+    imageHint: 'sourdough bread',
     foodType: 'Bread',
     quantity: '50 loaves',
     pickupTime: addHours(now, 1).toISOString(),
@@ -28,8 +28,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_003',
-    imageUrl: 'https://picsum.photos/seed/produce/400/300',
-    imageHint: 'fresh produce',
+    imageUrl: 'https://picsum.photos/seed/fresh-vegetables/400/300',
+    imageHint: 'fresh vegetables',
     foodType: 'Fresh Produce',
     quantity: '3 boxes',
     pickupTime: addHours(now, 4).toISOString(),
@@ -39,8 +39,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_004',
-    imageUrl: 'https://picsum.photos/seed/pastry/400/300',
-    imageHint: 'assorted pastries',
+    imageUrl: 'https://picsum.photos/seed/croissants/400/300',
+    imageHint: 'fresh croissants',
     foodType: 'Pastries',
     quantity: '4 dozen',
     pickupTime: addHours(now, 0.5).toISOString(),
@@ -50,8 +50,8 @@ export const mockDonations: Donation[] = [
   },
     {
     id: 'd_005',
-    imageUrl: 'https://picsum.photos/seed/canned/400/300',
-    imageHint: 'canned goods',
+    imageUrl: 'https://picsum.photos/seed/canned-food/400/300',
+    imageHint: 'canned food',
     foodType: 'Canned Goods',
     quantity: '100 cans',
     pickupTime: addHours(now, 24).toISOString(),
@@ -61,8 +61,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_006',
-    imageUrl: 'https://picsum.photos/seed/meals/400/300',
-    imageHint: 'prepared meals',
+    imageUrl: 'https://picsum.photos/seed/takeaway-meals/400/300',
+    imageHint: 'takeaway meals',
     foodType: 'Prepared Meals',
     quantity: '30 portions',
     pickupTime: addHours(now, 1.5).toISOString(),
