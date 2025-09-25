@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         hostname: 'user-gen-media-assets.s3.amazonaws.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

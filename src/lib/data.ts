@@ -2,11 +2,12 @@ import { addHours, subHours, subDays } from 'date-fns';
 import { Donation, Stat, ChartData, PieChartData } from './types';
 
 const now = new Date();
+const donationImage = 'https://i.ibb.co/L0HwLpC/s0-UFDWw-KMA5-Hvm0-Pb.png';
 
 export const mockDonations: Donation[] = [
   {
     id: 'd_001',
-    imageUrl: 'https://picsum.photos/seed/club-sandwich/400/300',
+    imageUrl: donationImage,
     imageHint: 'club sandwiches',
     foodType: 'Sandwiches',
     quantity: '20 meals',
@@ -17,7 +18,7 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_002',
-    imageUrl: 'https://picsum.photos/seed/sourdough-bread/400/300',
+    imageUrl: donationImage,
     imageHint: 'sourdough bread',
     foodType: 'Bread',
     quantity: '50 loaves',
@@ -28,7 +29,7 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_003',
-    imageUrl: 'https://picsum.photos/seed/fresh-vegetables/400/300',
+    imageUrl: donationImage,
     imageHint: 'fresh vegetables',
     foodType: 'Fresh Produce',
     quantity: '3 boxes',
@@ -39,7 +40,7 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_004',
-    imageUrl: 'https://picsum.photos/seed/croissants/400/300',
+    imageUrl: donationImage,
     imageHint: 'fresh croissants',
     foodType: 'Pastries',
     quantity: '4 dozen',
@@ -50,7 +51,7 @@ export const mockDonations: Donation[] = [
   },
     {
     id: 'd_005',
-    imageUrl: 'https://picsum.photos/seed/canned-food/400/300',
+    imageUrl: donationImage,
     imageHint: 'canned food',
     foodType: 'Canned Goods',
     quantity: '100 cans',
@@ -61,7 +62,7 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_006',
-    imageUrl: 'https://picsum.photos/seed/takeaway-meals/400/300',
+    imageUrl: donationImage,
     imageHint: 'takeaway meals',
     foodType: 'Prepared Meals',
     quantity: '30 portions',

@@ -5,6 +5,8 @@ import React, { useState, createContext, useContext } from 'react';
 import type { Donation } from '@/lib/types';
 import { mockDonations } from '@/lib/data';
 
+const donationImage = 'https://i.ibb.co/L0HwLpC/s0-UFDWw-KMA5-Hvm0-Pb.png';
+
 interface DonationContextType {
   donations: Donation[];
   addDonation: (donation: Omit<Donation, 'id' | 'createdAt' | 'imageUrl' | 'imageHint' | 'distanceKm'>) => void;
@@ -20,8 +22,7 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
       ...donation,
       id: `dnt_${Date.now()}`,
       createdAt: new Date().toISOString(),
-      // For now, let's use a random image from picsum
-      imageUrl: `https://picsum.photos/seed/${Math.random()}/400/300`,
+      imageUrl: donationImage,
       imageHint: donation.foodType.toLowerCase(),
       distanceKm: parseFloat((Math.random() * 10).toFixed(1)),
       location: {
