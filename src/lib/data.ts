@@ -1,14 +1,20 @@
 import { addHours, subHours, subDays } from 'date-fns';
 import { Donation, Stat, ChartData, PieChartData } from './types';
+import { PlaceHolderImages } from './placeholder-images';
 
 const now = new Date();
-const donationImage = 'https://i.ibb.co/L0HwLpC/s0-UFDWw-KMA5-Hvm0-Pb.png';
+
+const getImageForFoodType = (foodType: string) => {
+  const genericFoodImage = PlaceHolderImages.find(img => img.id === 'donation-meals')!;
+  const specificImage = PlaceHolderImages.find(img => img.id === `donation-${foodType.toLowerCase().split(' ')[0]}`);
+  return specificImage || genericFoodImage;
+};
 
 export const mockDonations: Donation[] = [
   {
     id: 'd_001',
-    imageUrl: donationImage,
-    imageHint: 'club sandwiches',
+    imageUrl: getImageForFoodType('Sandwiches').imageUrl,
+    imageHint: getImageForFoodType('Sandwiches').imageHint,
     foodType: 'Sandwiches',
     quantity: '20 meals',
     pickupTime: addHours(now, 2).toISOString(),
@@ -18,8 +24,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_002',
-    imageUrl: donationImage,
-    imageHint: 'sourdough bread',
+    imageUrl: getImageForFoodType('Bread').imageUrl,
+    imageHint: getImageForFoodType('Bread').imageHint,
     foodType: 'Bread',
     quantity: '50 loaves',
     pickupTime: addHours(now, 1).toISOString(),
@@ -29,8 +35,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_003',
-    imageUrl: donationImage,
-    imageHint: 'fresh vegetables',
+    imageUrl: getImageForFoodType('Fresh Produce').imageUrl,
+    imageHint: getImageForFoodType('Fresh Produce').imageHint,
     foodType: 'Fresh Produce',
     quantity: '3 boxes',
     pickupTime: addHours(now, 4).toISOString(),
@@ -40,8 +46,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_004',
-    imageUrl: donationImage,
-    imageHint: 'fresh croissants',
+    imageUrl: getImageForFoodType('Pastries').imageUrl,
+    imageHint: getImageForFoodType('Pastries').imageHint,
     foodType: 'Pastries',
     quantity: '4 dozen',
     pickupTime: addHours(now, 0.5).toISOString(),
@@ -51,8 +57,8 @@ export const mockDonations: Donation[] = [
   },
     {
     id: 'd_005',
-    imageUrl: donationImage,
-    imageHint: 'canned food',
+    imageUrl: getImageForFoodType('Canned Goods').imageUrl,
+    imageHint: getImageForFoodType('Canned Goods').imageHint,
     foodType: 'Canned Goods',
     quantity: '100 cans',
     pickupTime: addHours(now, 24).toISOString(),
@@ -62,8 +68,8 @@ export const mockDonations: Donation[] = [
   },
   {
     id: 'd_006',
-    imageUrl: donationImage,
-    imageHint: 'takeaway meals',
+    imageUrl: getImageForFoodType('Prepared Meals').imageUrl,
+    imageHint: getImageForFoodType('Prepared Meals').imageHint,
     foodType: 'Prepared Meals',
     quantity: '30 portions',
     pickupTime: addHours(now, 1.5).toISOString(),

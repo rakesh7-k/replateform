@@ -4,8 +4,7 @@
 import React, { useState, createContext, useContext } from 'react';
 import type { Donation } from '@/lib/types';
 import { mockDonations } from '@/lib/data';
-
-const donationImage = 'https://i.ibb.co/L0HwLpC/s0-UFDWw-KMA5-Hvm0-Pb.png';
+import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 interface DonationContextType {
   donations: Donation[];
@@ -18,12 +17,22 @@ export function DonationProvider({ children }: { children: React.ReactNode }) {
   const [donations, setDonations] = useState<Donation[]>(mockDonations);
 
   const addDonation = (donation: Omit<Donation, 'id' | 'createdAt' | 'imageUrl' | 'imageHint' | 'distanceKm'>) => {
+    
+    const getImageForFoodType = (foodType: string) => {
+      const defaultImage = PlaceHolderImages.find(img => img.id === 'donation-meals')!;
+      const foodTypeSimple = foodType.toLowerCase().split(' ')[0];
+      const specificImage = PlaceHolderImages.find(img => img.id === `donation-${foodTypeSimple}`);
+      return specificImage || defaultImage;
+    };
+    
+    const imageInfo = getImageForFoodType(donation.foodType);
+
     const newDonation: Donation = {
       ...donation,
       id: `dnt_${Date.now()}`,
       createdAt: new Date().toISOString(),
-      imageUrl: donationImage,
-      imageHint: donation.foodType.toLowerCase(),
+      imageUrl: imageInfo.imageUrl,
+      imageHint: imageInfo.imageHint,
       distanceKm: parseFloat((Math.random() * 10).toFixed(1)),
       location: {
         ...donation.location,
